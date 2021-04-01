@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: grocerygateway
+  config:
+    import: optional:configserver:http://localhost:8888
   cloud:
     gateway:
       routes:
@@ -15,9 +17,8 @@ spring:
           uri: lb://USERMICROSERVICE
           predicates:
             - Path=/user/**
-eureka:
-  client:
-    enabled: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
+        - id: cartmicroservice
+          uri: lb://CARTMICROSERVICE
+          predicates:
+            - Path=/cart/**
+
