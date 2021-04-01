@@ -1,0 +1,23 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: grocerygateway
+  cloud:
+    gateway:
+      routes:
+        - id: catalogmicroservice
+          uri: lb://CATALOGMICROSERVICE
+          predicates:
+            - Path=/consumer/**,/admin/**
+        - id: usermicroservice
+          uri: lb://USERMICROSERVICE
+          predicates:
+            - Path=/user/**
+eureka:
+  client:
+    enabled: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
